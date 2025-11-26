@@ -17,67 +17,67 @@ OUTPUT_DIR="$SCRIPT_DIR/output"
 
 declare -A first_file
 declare -A name_patterns=(
-	["Alt"]="Alternate"
-	["Alternate"]="Alternate"
-	["AppStarting"]="Work"
-	["Arrow"]="Default"
-	["Busy"]="Busy"
-	["Cross"]="Cross"
-	["Crosshair"]="Cross"
-	["Default"]="Default"
-	["Dgn"]="Dgn1"
-	["Dgn1"]="Dgn1"
-	["Dgn2"]="Dgn2"
-	["Diagonal 1"]="Dgn1"
-	["Diagonal 2"]="Dgn2"
-	["Diagonal Resize 1"]="Dgn1"
-	["Diagonal Resize 2"]="Dgn2"
-	["Diagonal"]="Dgn1"
-	["Hand"]="Hand"
-	["Handwriting"]="Hand"
-	["Help"]="Help"
-	["Horizontal"]="Horizontal"
-	["Horz"]="Horizontal"
-	["IBeam"]="Text"
-	["Link"]="Link"
-	["Move"]="Move"
-	["NWPen"]="Hand"
-	["No"]="Unavailable"
-	["Normal"]="Default"
-	["Precision"]="Cross"
-	["SizeAll"]="Move"
-	["SizeE"]="Horizontal"
-	["SizeN"]="Vertical"
-	["SizeNESW"]="Dgn2"
-	["SizeNS"]="Vertical"
-	["SizeNWSE"]="Dgn1"
-	["SizeS"]="Vertical"
-	["SizeW"]="Horizontal"
-	["SizeWE"]="Horizontal"
-	["Text"]="Text"
-	["Unavailable"]="Unavailable"
-	["UpArrow"]="Alternate"
-	["Vert"]="Vertical"
-	["Vertical"]="Vertical"
-	["Wait"]="Busy"
-	["Work"]="Work"
-	["Working"]="Work"
-	["テキスト"]="Text"
-	["バックグラウンド"]="Work"
-	["ヘルプ"]="Help"
-	["リンク"]="Link"
-	["上下"]="Vertical"
-	["代替"]="Alternate"
-	["利用不可"]="Unavailable"
-	["左右"]="Horizontal"
-	["待ち"]="Busy"
-	["手書き"]="Hand"
-	["斜め"]="Dgn1"
-	["斜め1"]="Dgn1"
-	["斜め2"]="Dgn2"
-	["移動"]="Move"
-	["通常"]="Default"
-	["領域"]="Cross"
+    ["Alt"]="Alternate"
+    ["Alternate"]="Alternate"
+    ["AppStarting"]="Work"
+    ["Arrow"]="Default"
+    ["Busy"]="Busy"
+    ["Cross"]="Cross"
+    ["Crosshair"]="Cross"
+    ["Default"]="Default"
+    ["Dgn"]="Dgn1"
+    ["Dgn1"]="Dgn1"
+    ["Dgn2"]="Dgn2"
+    ["Diagonal 1"]="Dgn1"
+    ["Diagonal 2"]="Dgn2"
+    ["Diagonal Resize 1"]="Dgn1"
+    ["Diagonal Resize 2"]="Dgn2"
+    ["Diagonal"]="Dgn1"
+    ["Hand"]="Hand"
+    ["Handwriting"]="Hand"
+    ["Help"]="Help"
+    ["Horizontal"]="Horizontal"
+    ["Horz"]="Horizontal"
+    ["IBeam"]="Text"
+    ["Link"]="Link"
+    ["Move"]="Move"
+    ["NWPen"]="Hand"
+    ["No"]="Unavailable"
+    ["Normal"]="Default"
+    ["Precision"]="Cross"
+    ["SizeAll"]="Move"
+    ["SizeE"]="Horizontal"
+    ["SizeN"]="Vertical"
+    ["SizeNESW"]="Dgn2"
+    ["SizeNS"]="Vertical"
+    ["SizeNWSE"]="Dgn1"
+    ["SizeS"]="Vertical"
+    ["SizeW"]="Horizontal"
+    ["SizeWE"]="Horizontal"
+    ["Text"]="Text"
+    ["Unavailable"]="Unavailable"
+    ["UpArrow"]="Alternate"
+    ["Vert"]="Vertical"
+    ["Vertical"]="Vertical"
+    ["Wait"]="Busy"
+    ["Work"]="Work"
+    ["Working"]="Work"
+    ["テキスト"]="Text"
+    ["バックグラウンド"]="Work"
+    ["ヘルプ"]="Help"
+    ["リンク"]="Link"
+    ["上下"]="Vertical"
+    ["代替"]="Alternate"
+    ["利用不可"]="Unavailable"
+    ["左右"]="Horizontal"
+    ["待ち"]="Busy"
+    ["手書き"]="Hand"
+    ["斜め"]="Dgn1"
+    ["斜め1"]="Dgn1"
+    ["斜め2"]="Dgn2"
+    ["移動"]="Move"
+    ["通常"]="Default"
+    ["領域"]="Cross"
 )
 
 # Cursor mappings from Windows to Linux
@@ -112,11 +112,12 @@ print_message() {
 }
 
 check_cursorgen() {
-	if ! command -v cursorgen &>/dev/null; then
-		print_message $RED "Error: cursorgen is not installed or not in PATH"
-		print_message $YELLOW "Please install cursorgen from: https://github.com/meanvoid/cursorgen"
-		exit 1
-	fi
+    if ! command -v cursorgen &>/dev/null; then
+        print_message $RED "Error: cursorgen is not installed or not in PATH"
+        print_message $YELLOW "Please install cursorgen from: https://github.com/meanvoid/cursorgen"
+        exit 1
+    fi
+}
 
 create_directories() {
     if [ ! -d "$INPUT_DIR" ]; then
@@ -250,8 +251,8 @@ convert_cursor_file() {
     if ((need_conversion)); then
         local temp_dir=$(mktemp -d)
 
-		if cursorgen -o "$temp_dir" "$input_file" 2>/dev/null; then
-			local converted_file=$(find "$temp_dir" -type f | head -1)
+        if cursorgen -o "$temp_dir" "$input_file" 2>/dev/null; then
+            local converted_file=$(find "$temp_dir" -type f | head -1)
             if [ -f "$converted_file" ]; then
                 cp "$converted_file" "$output_dir/$primary"
                 first_file[$primary]="$output_dir/$primary"
@@ -285,12 +286,12 @@ convert_cursor_file() {
         rel_path=$(realpath --relative-to="$output_dir" "$target")
         ln -sf "$rel_path" "$output_dir/$name"
 
-		if [[ "$target" == "$real_target" ]]; then
-			print_message $YELLOW "    Linked $name → $primary"
-		else
-			print_message $YELLOW "    Linked $name → ${first_file[$name]} (already exist)"
-		fi
-	done
+        if [[ "$target" == "$real_target" ]]; then
+            print_message $YELLOW "    Linked $name → $primary"
+        else
+            print_message $YELLOW "    Linked $name → ${first_file[$name]} (already exist)"
+        fi
+    done
 
     rm -rf "$temp_dir"
     return 0
@@ -324,10 +325,10 @@ process_cursor_theme() {
     for cursor_file in "${cursor_files[@]}"; do
         local cursor_name=$(get_cursor_name_from_inf "$inf_file" "$cursor_file")
 
-		if [ -z "$cursor_name" ]; then
-			print_message $RED "    Skipping unmapped cursor: $(basename "$cursor_file")"
-			continue
-		fi
+        if [ -z "$cursor_name" ]; then
+            print_message $RED "    Skipping unmapped cursor: $(basename "$cursor_file")"
+            continue
+        fi
 
         local linux_names="${mappings[$cursor_name]}"
 
@@ -366,8 +367,8 @@ main() {
     print_message $BLUE "Windows to Linux Cursor Converter"
     print_message $BLUE "================================="
 
-	check_cursorgen
-	create_directories
+    check_cursorgen
+    create_directories
 
     local theme_dirs=()
     while IFS= read -r -d '' dir; do
