@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Windows to Linux Cursor Converter Script
-# Uses win2xcur to convert Windows cursor themes to Linux format
+# Uses cursorgen to convert Windows cursor themes to Linux format
 
 # Color codes for output
 RED='\033[0;31m'
@@ -36,13 +36,14 @@ declare -A name_patterns=(
 	["Hand"]="Hand"
 	["Handwriting"]="Hand"
 	["Help"]="Help"
-	["Horz"]="Horizontal"
 	["Horizontal"]="Horizontal"
+	["Horz"]="Horizontal"
 	["IBeam"]="Text"
 	["Link"]="Link"
 	["Move"]="Move"
 	["NWPen"]="Hand"
 	["No"]="Unavailable"
+	["Normal"]="Default"
 	["Precision"]="Cross"
 	["SizeAll"]="Move"
 	["SizeE"]="Horizontal"
@@ -110,10 +111,10 @@ print_message() {
 	echo -e "${color}${message}${NC}"
 }
 
-check_win2xcur() {
-	if ! command -v win2xcur &>/dev/null; then
-		print_message $RED "Error: win2xcur is not installed or not in PATH"
-		print_message $YELLOW "Please install win2xcur from: https://github.com/quantum5/win2xcur"
+check_cursorgen() {
+	if ! command -v cursorgen &>/dev/null; then
+		print_message $RED "Error: cursorgen is not installed or not in PATH"
+		print_message $YELLOW "Please install cursorgen from: https://github.com/quantum5/win2xcur"
 		exit 1
 	fi
 }
@@ -250,7 +251,7 @@ convert_cursor_file() {
 	if ((need_conversion)); then
 		local temp_dir=$(mktemp -d)
 
-		if win2xcur -o "$temp_dir" "$input_file" 2>/dev/null; then
+		if cursorgen -o "$temp_dir" "$input_file" 2>/dev/null; then
 			local converted_file=$(find "$temp_dir" -type f | head -1)
 
 			if [ -f "$converted_file" ]; then
@@ -326,7 +327,7 @@ process_cursor_theme() {
 		local cursor_name=$(get_cursor_name_from_inf "$inf_file" "$cursor_file")
 
 		if [ -z "$cursor_name" ]; then
-			print_message $YELLOW "    Skipping unmapped cursor: $(basename "$cursor_file")"
+			print_message $RED "    Skipping unmapped cursor: $(basename "$cursor_file")"
 			continue
 		fi
 
@@ -367,7 +368,7 @@ main() {
 	print_message $BLUE "Windows to Linux Cursor Converter"
 	print_message $BLUE "================================="
 
-	check_win2xcur
+	check_cursorgen
 	create_directories
 
 	local theme_dirs=()

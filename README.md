@@ -1,6 +1,6 @@
 # 🖱️ Windows to Linux Cursor Converter
 
-Convert Windows cursor themes to Linux format with ease! This tool automatically converts `.cur` and `.ani` files to Linux-compatible cursors using `win2xcur`.
+Convert Windows cursor themes to Linux format with ease! This tool automatically converts `.cur` and `.ani` files to Linux-compatible cursors using `cursorgen`.
 
 ## ✨ Features
 
@@ -8,13 +8,13 @@ Convert Windows cursor themes to Linux format with ease! This tool automatically
 - 📁 **Proper Structure**: Creates standard Linux cursor theme directories
 - 🎨 **Multiple Variants**: Generates all necessary cursor variants for complete compatibility
 
-> **Note**: Originally implemented in Bash, then ported to Python for cross-platform compatibility and because Python was already required for win2xcur. The Bash version remains available but may be removed in future updates in favor of the Python implementation.
+> **Note**: Originally implemented in Bash, then ported to Python for cross-platform compatibility and because Python was already required for cursorgen. The Bash version remains available but may be removed in future updates in favor of the Python implementation.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-Install `win2xcur` from: https://github.com/quantum5/win2xcur
+Install `cursorgen` from: https://github.com/meanvoid/cursorgen
 
 ### Usage
 
@@ -55,7 +55,7 @@ Install `win2xcur` from: https://github.com/quantum5/win2xcur
 ```
 cursor-converter/
 ├── convert_cursors.sh    # Bash implementation
-├── convert_cursors.py    # Python implementation  
+├── convert_cursors.py    # Python implementation
 ├── input/               # Place Windows cursor themes here
 │   └── theme-name/
 │       ├── *.cur, *.ani
@@ -94,6 +94,6 @@ cursor-converter/
 # User installation
 cp -r "output/Theme Name" ~/.icons/
 
-# System-wide installation  
+# System-wide installation
 sudo cp -r "output/Theme Name" /usr/share/icons/
 ```
