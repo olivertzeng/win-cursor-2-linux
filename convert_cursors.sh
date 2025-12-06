@@ -76,6 +76,8 @@ declare -A name_patterns=(
     ["斜め1"]="Dgn1"
     ["斜め2"]="Dgn2"
     ["移動"]="Move"
+    ["縮小1"]="Dgn1"
+    ["縮小2"]="Dgn2"
     ["通常"]="Default"
     ["領域"]="Cross"
 )
@@ -352,6 +354,11 @@ create_index_theme() {
     local theme_dir=$1
     local theme_name=$2
     local index_file="$theme_dir/index.theme"
+
+    if [ -f "$index_file" ]; then
+        print_message $YELLOW "  index.theme already exists, skipping creation."
+        return
+    fi
 
     cat >"$index_file" <<EOF
 [Icon Theme]
